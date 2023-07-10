@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (doc.exists) {
           window.location.href = doc.data().redirect;
         } else {
-          messageEl.textContent = 'Invalid passcode. Please try again.';
+          messageEl.textContent = 'Invalid passcode ' + passcodeInput.value +' . Please try again.';
         }
       });
   
