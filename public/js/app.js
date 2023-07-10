@@ -12,12 +12,14 @@ document.addEventListener('DOMContentLoaded', function() {
       passcodeForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const passcode = passcodeInput.value;
-        const doc = await db.collection('checkpoints').where('passCode', '==', passcode).get();
+        const querySnapshot = await db.collection('checkpoints').where('passCode', '==', passcode).get();
   
-        if (doc.exists) {
+        if (!querySnapshot.empty) {
+          // Access the first document that matches the query
+          const doc = querySnapshot.docs[0];
           window.location.href = doc.data().redirect;
         } else {
-          messageEl.textContent = 'Invalid passcode ' + passcodeInput.value +' . Please try again.';
+          messageEl.textContent = 'Invalid passcode \'' + passcodeInput.value + '\' . Please try again.';
         }
       });
   
@@ -26,3 +28,4 @@ document.addEventListener('DOMContentLoaded', function() {
       messageEl.textContent = 'Error initializing Firebase, check the console.';
     }
   });
+  
