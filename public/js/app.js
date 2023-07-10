@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
       passcodeForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const passcode = passcodeInput.value;
-        const doc = await db.collection('checkpoints').where('passCode', '==', passCode).get();
+        const doc = await db.collection('checkpoints').where('passCode', '==', passcode).get();
   
         if (doc.exists) {
           window.location.href = doc.data().redirect;
