@@ -61,20 +61,20 @@
         let firestore = firebase.firestore();
 
         goButton.addEventListener('click', function() {
-          const passCode = passCodeInput.value;
-          firestore.collection('checkpoints').where('passCode', '==', passCode).get().then(querySnapshot => {
-            if (!querySnapshot.empty) {
-              const data = querySnapshot.docs[0].data();
-              window.location.href = data.redirect;
-            } else {
-              alert('Invalid code. Please try again.');
-            }
-          }).catch(error => {
-            console.error('Error getting document:', error);
-          });
+          let codeInput = passCode.value.trim();
+          firebase.firestore().collection('checkpoints').where('passCode', '==', codeInput).get()
+            .then((querySnapshot) => {
+              if (!querySnapshot.empty) {
+                let checkpoint = querySnapshot.docs[0].data();
+                window.location.href = checkpoint.redirect;
+              } else {
+                alert("Invalid code. Please try again.");
+              }
+            })
+            .catch((error) => {
+              console.log("Error getting documents: ", error); // Log the error for debugging
+            });
         });
-
-        // Omitted for brevity
       });
     </script>
   </body>
