@@ -1,16 +1,11 @@
 {
   "hosting": {
-    "public": "public",
+    "site": "liaart-treasurehunt",
+    "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "!/@(js|css)/**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
