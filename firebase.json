@@ -1,7 +1,6 @@
 {
   "hosting": {
-    "site": "liaart-treasurehunt",
-    "public": ".",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,7 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "!/js/**",
         "destination": "/index.html"
       }
     ]
