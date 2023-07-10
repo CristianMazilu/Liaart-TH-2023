@@ -26,4 +26,3 @@ document.addEventListener('DOMContentLoaded', function() {
       messageEl.textContent = 'Error initializing Firebase, check the console.';
     }
   });
-  
