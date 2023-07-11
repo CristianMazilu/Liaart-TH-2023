@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LIA Art Treasure Hunt</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- Firebase App -->
+    <script defer src="/__/firebase/10.0.0/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/10.0.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>LIA Art Treasure Hunt</h1>
+          <h2>Navigație intergalactică</h2>
+          <p>Atenție agenți! În acest test trebuie să vă folosiți abilitățile de călători intergalactici, și să codificați punctele cheie ale traiectoriei navei cu care vă veți deplasa către galaxia Messier 82.</p>
+          <p>Aceste puncte vor defini modul în care nava se va deplasa în timp ce voi intrați în hiper-somn în prima parte a misiunii. Introduceți codul traiectoriei pentru a continua trainingul.</p>
+          <div>
+            <p>Pun și puzzle-ul imediat... Soluția e L1F4L1F2L1F4</p>
+          </div>
+
+          <form id="solutionForm">
+            <div class="form-group">
+              <input type="text" id="solutionInput" class="form-control" placeholder="Introdu soluția...">
+            </div>
+            <button type="submit" class="btn btn-primary">Trimite soluția!!</button>
+          </form>
+          
+          <p id="solutionMessage"></p>
+          
+          <!-- Div for Map Display -->
+          <div id="mapDisplay" style="display:none;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1360.473846725798!2d25.914833299999994!3d47.001999999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDfCsDAwJzA3LjIiTiAyNcKwNTQnNTMuNCJF!5e0!3m2!1sen!2sro!4v1689094677856!5m2!1sen!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="./js/app.js"></script>
+  </body>
+</html>
