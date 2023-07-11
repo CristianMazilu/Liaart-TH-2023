@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const solutionInput = document.querySelector('#solutionInput');
     const solutionMessageEl = document.querySelector('#solutionMessage');
     const mapDisplayEl = document.querySelector('#mapDisplay');
+    const mapSrc = document.querySelector('#mapFrame');
 
     solutionForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (solution === dbSolution) {
           mapDisplayEl.style.display = 'block';
+          mapSrc.src = doc.data().mapSrc;
         } else {
           solutionMessageEl.textContent = 'Mai încearcă!';
         }
