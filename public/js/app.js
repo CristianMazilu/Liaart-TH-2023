@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const solutionMessageEl = document.querySelector('#solutionMessage');
     const mapDisplayEl = document.querySelector('#mapDisplay');
     const mapSrc = document.querySelector('#mapFrame');
+    const nextentryCodeEl = document.querySelector('#nextEntryCode');
 
     solutionForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -56,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (solution === dbSolution) {
           mapDisplayEl.style.display = 'block';
           mapSrc.src = doc.data().mapSrc;
+          nextentryCodeEl.textContent = doc.data().nextEntryCode;
         } else {
           solutionMessageEl.textContent = 'Mai încearcă!';
         }
@@ -67,5 +69,30 @@ document.addEventListener('DOMContentLoaded', function() {
   } catch (e) {
     console.error(e);
     solutionMessageEl.textContent = 'Eroare de accesare a bazei de date. Contactează organizatorii.';
+  }
+});
+
+
+const entryCodeForm = document.querySelector('#entryCodeForm');
+const entryCodeInput = document.querySelector('#entryCodeInput');
+const entryCodeMessageEl = document.querySelector('#entryCodeMessage');
+
+const contentEl = document.querySelector('#content');
+
+entryCodeForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const entryCode = entryCodeInput.value;
+  const querySnapshot = await db.collection('checkpoints').where('entryCode', '==', entryCode).get();
+
+  if (!querySnapshot.empty) {
+    // Access the first document that matches the query
+    const doc = querySnapshot.docs[0];
+    if (window.location.href === doc.data().redirect) {
+      contentEl.style.display = 'block';
+    } else {
+      entryCodeMessageEl.textContent = 'This is not the correct checkpoint for this entry code.';
+    }
+  } else {
+    entryCodeMessageEl.textContent = 'Invalid entry code, please try again.';
   }
 });
