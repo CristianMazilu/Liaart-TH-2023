@@ -1,9 +1,9 @@
+// Initialize Firebase
+let app = firebase.app();
+const db = firebase.firestore();
+
 document.addEventListener('DOMContentLoaded', function() {
   try {
-    // Initialize Firebase
-    let app = firebase.app();
-    const db = firebase.firestore();
-
     // Form submission logic
     const passcodeForm = document.querySelector('#passcodeForm');
     const passcodeInput = document.querySelector('#passcodeInput');
@@ -32,10 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
   try {
-    // Initialize Firebase
-    let app = firebase.app();
-    const db = firebase.firestore();
-
     // Form submission logic
     const solutionForm = document.querySelector('#solutionForm');
     const solutionInput = document.querySelector('#solutionInput');
