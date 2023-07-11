@@ -1,9 +1,9 @@
-// Initialize Firebase
-let app = firebase.app();
-const db = firebase.firestore();
-
 document.addEventListener('DOMContentLoaded', function() {
   try {
+    // Initialize Firebase
+    let app = firebase.app();
+    const db = firebase.firestore();
+
     // Form submission logic
     const passcodeForm = document.querySelector('#passcodeForm');
     const passcodeInput = document.querySelector('#passcodeInput');
@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
   try {
+    // Initialize Firebase
+    let app = firebase.app();
+    const db = firebase.firestore();
+
     // Form submission logic
     const solutionForm = document.querySelector('#solutionForm');
     const solutionInput = document.querySelector('#solutionInput');
@@ -69,26 +73,40 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-const entryCodeForm = document.querySelector('#entryCodeForm');
-const entryCodeInput = document.querySelector('#entryCodeInput');
-const entryCodeMessageEl = document.querySelector('#entryCodeMessage');
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // Initialize Firebase
+    let app = firebase.app();
+    const db = firebase.firestore();
 
-const contentEl = document.querySelector('#content');
+    // New form and input
+    const entryCodeForm = document.querySelector('#entryCodeForm');
+    const entryCodeInput = document.querySelector('#entryCodeInput');
+    const entryCodeMessageEl = document.querySelector('#entryCodeMessage');
 
-entryCodeForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const entryCode = entryCodeInput.value;
-  const querySnapshot = await db.collection('checkpoints').where('redirect', '==', window.location.href).get();
+    // New div to show/hide
+    const contentEl = document.querySelector('#content');
 
-  if (!querySnapshot.empty) {
-    // Access the first document that matches the query
-    const doc = querySnapshot.docs[0];
-    if (entryCode === doc.data().entryCode) {
-      contentEl.style.display = 'block';
-    } else {
-      entryCodeMessageEl.textContent = 'This is not the correct checkpoint for this entry code.';
-    }
-  } else {
-    entryCodeMessageEl.textContent = 'Invalid entry code, please try again.';
+    entryCodeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const entryCode = entryCodeInput.value;
+      const querySnapshot = await db.collection('checkpoints').where('redirect', '==', window.location.href).get();
+
+      if (!querySnapshot.empty) {
+        // Access the first document that matches the query
+        const doc = querySnapshot.docs[0];
+        if (entryCode === doc.data().entryCode) {
+          contentEl.style.display = 'block';
+        } else {
+          entryCodeMessageEl.textContent = 'This is not the correct checkpoint for this entry code.';
+        }
+      } else {
+        entryCodeMessageEl.textContent = 'Invalid entry code, please try again.';
+      }
+    });
+
+  } catch (e) {
+    console.error(e);
+    entryCodeMessageEl.textContent = 'Error initializing Firebase, check the console.';
   }
 });
