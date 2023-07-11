@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const doc = querySnapshot.docs[0];
         window.location.href = doc.data().redirect;
       } else {
-        messageEl.textContent = 'Invalid passcode \'' + passcodeInput.value + '\' . Please try again.';
+        messageEl.textContent = 'Codul \'' + passcodeInput.value + '\' este invalid. Încearcă din nou.';
       }
     });
 
   } catch (e) {
     console.error(e);
-    messageEl.textContent = 'Error initializing Firebase, check the console.';
+    messageEl.textContent = 'Eroare de inițializare a bazei de date. Contactează organizatorii.';
   }
 });
   
@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
           mapDisplayEl.style.display = 'block';
           mapSrc.src = doc.data().mapSrc;
           nextentryCodeEl.textContent = doc.data().nextEntryCode;
+          solutionMessageEl.style.display = 'none';
         } else {
           solutionMessageEl.textContent = 'Mai încearcă!';
         }
@@ -97,16 +98,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const doc = querySnapshot.docs[0];
         if (entryCode === doc.data().entryCode) {
           contentEl.style.display = 'block';
+          entryCodeMessageEl.style.display = 'none';
         } else {
-          entryCodeMessageEl.textContent = 'This is not the correct checkpoint for this entry code.';
+          entryCodeMessageEl.textContent = 'Codul de intrare nu este corect. Verifică dacă ești la checkpointul corect.';
         }
       } else {
-        entryCodeMessageEl.textContent = 'Invalid entry code, please try again.';
+        entryCodeMessageEl.textContent = 'Cod de intrare invalid. Încearcă din nou.';
       }
     });
 
   } catch (e) {
     console.error(e);
-    entryCodeMessageEl.textContent = 'Error initializing Firebase, check the console.';
+    entryCodeMessageEl.textContent = 'Eroare de inițializare a bazei de date. Contactează organizatorii.';
   }
 });
