@@ -82,12 +82,12 @@ const contentEl = document.querySelector('#content');
 entryCodeForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const entryCode = entryCodeInput.value;
-  const querySnapshot = await db.collection('checkpoints').where('entryCode', '==', entryCode).get();
+  const querySnapshot = await db.collection('checkpoints').where('redirect', '==', window.location.href).get();
 
   if (!querySnapshot.empty) {
     // Access the first document that matches the query
     const doc = querySnapshot.docs[0];
-    if (window.location.href === doc.data().redirect) {
+    if (entryCode === doc.data().entryCode) {
       contentEl.style.display = 'block';
     } else {
       entryCodeMessageEl.textContent = 'This is not the correct checkpoint for this entry code.';
