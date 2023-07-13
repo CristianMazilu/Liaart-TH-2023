@@ -1,3 +1,5 @@
+
+// Form logic for the index page, taking the user to the right checkpoint page. 
 document.addEventListener('DOMContentLoaded', function() {
   try {
     // Initialize Firebase
@@ -30,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
   
 
+
+// Form logic for the EXACT solution of the riddle on each checkpoint.
 document.addEventListener('DOMContentLoaded', function() {
   try {
     // Initialize Firebase
@@ -75,6 +79,54 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+// Form logic for the APPROXIMATE solution of the riddle on each checkpoint.
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // Initialize Firebase
+    let app = firebase.app();
+    const db = firebase.firestore();
+
+    // Form submission logic
+    const metaCheckpoint = document.querySelector('meta[name="checkpoint"]');
+    const approxSolutionForm = document.querySelector('#approxSolutionForm');
+    const approxSolutionInput = document.querySelector('#approxSolutionInput');
+    const approxSolutionMessageEl = document.querySelector('#approxSolutionMessage');
+    const mapDisplayEl = document.querySelector('#mapDisplay');
+    const mapSrc = document.querySelector('#mapFrame');
+    const nextentryCodeEl = document.querySelector('#nextEntryCode');
+
+    approxSolutionForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const solution = approxSolutionInput.value.trim().toLowerCase(); // also perform case-insensitive comparison
+      const querySnapshot = await db.collection('checkpoints').where('passCode', '==', metaCheckpoint.getAttribute('content')).get();
+
+      if (!querySnapshot.empty) {
+        // Access the first document that matches the query
+        const doc = querySnapshot.docs[0];
+        const dbSolution = doc.data().solution.toLowerCase(); // make it case-insensitive
+
+        if (solution.toLowerCase().includes(dbSolution.toLowerCase())) {
+          mapDisplayEl.style.display = 'block';
+          mapSrc.src = doc.data().mapSrc;
+          nextentryCodeEl.textContent = doc.data().nextEntryCode;
+          approxSolutionMessageEl.style.display = 'none';
+        } else {
+          approxSolutionMessageEl.textContent = 'Mai încearcă!';
+        }
+      } else {
+        approxSolutionMessageEl.textContent = 'Se pare că ai încercat un checkpoint greșit. Încearcă din nou, sau contactează organizatorii.';
+      }
+    });
+
+  } catch (e) {
+    console.error(e);
+    approxSolutionMessageEl.textContent = 'Eroare de accesare a bazei de date. Contactează organizatorii.';
+  }
+});
+
+
+// Form logic for the entry code of each checkpoint, to ensure that participants didn't skip any checkpoints.
 document.addEventListener('DOMContentLoaded', function() {
   try {
     // Initialize Firebase
