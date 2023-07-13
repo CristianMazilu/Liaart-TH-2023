@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const db = firebase.firestore();
 
     // Form submission logic
+    const metaCheckpoint = document.querySelector('meta[name="checkpoint"]');
     const solutionForm = document.querySelector('#solutionForm');
     const solutionInput = document.querySelector('#solutionInput');
     const solutionMessageEl = document.querySelector('#solutionMessage');
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     solutionForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const solution = solutionInput.value.trim().toLowerCase(); // also perform case-insensitive comparison
-      const querySnapshot = await db.collection('checkpoints').where('redirect', '==', window.location.href).get();
+      const querySnapshot = await db.collection('checkpoints').where('passCode', '==', metaCheckpoint.getAttribute('content')).get();
 
       if (!querySnapshot.empty) {
         // Access the first document that matches the query
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const db = firebase.firestore();
 
     // New form and input
+    const metaCheckpoint = document.querySelector('meta[name="checkpoint"]');
     const entryCodeForm = document.querySelector('#entryCodeForm');
     const entryCodeInput = document.querySelector('#entryCodeInput');
     const entryCodeMessageEl = document.querySelector('#entryCodeMessage');
@@ -91,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     entryCodeForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const entryCode = entryCodeInput.value;
-      const querySnapshot = await db.collection('checkpoints').where('redirect', '==', window.location.href).get();
+      const querySnapshot = await db.collection('checkpoints').where('passCode', '==', metaCheckpoint.getAttribute('content')).get();
 
       if (!querySnapshot.empty) {
         // Access the first document that matches the query
