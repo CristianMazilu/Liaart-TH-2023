@@ -50,27 +50,34 @@ document.addEventListener('DOMContentLoaded', function() {
     passcodeForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const passcode = passcodeInput.value;
-      const querySnapshot = await db.collection('checkpoints').where('passCode', '==', passcode).get();
 
-      if (!querySnapshot.empty && passcode === 'liaartTH') {
-        // Access the first document that matches the query
-        const doc = querySnapshot.docs[0];
-        const docData = doc.data();
-
+      if (passcode === 'liaartTH') {
         // Show the locationsHidden div
         locationsHiddenDiv.style.display = 'block';
 
-        // Select elements and set properties
+        // Class names to query
         const elements = ['braille', 'celestial', 'documents', 'language', 'laws', 'musicality', 'navigation', 'sudoku'];
-        elements.forEach(element => {
-          const aElement = locationsHiddenDiv.querySelector(`a.${element}`);
-          const pElement = locationsHiddenDiv.querySelector(`p.${element}`);
-          const iframeElement = locationsHiddenDiv.querySelector(`iframe.${element}`);
 
-          if (aElement) aElement.href = docData.redirect;
-          if (pElement) pElement.textContent = docData.entryCode;
-          if (iframeElement) iframeElement.src = docData.mapSrc;
-        });
+        for (const element of elements) {
+          // Query Firestore for each element type
+          const querySnapshot = await db.collection('checkpoints').where('class', '==', element).get();
+
+          // Check if the query returned a result
+          if (!querySnapshot.empty) {
+            // Access the first document that matches the query
+            const doc = querySnapshot.docs[0];
+            const docData = doc.data();
+
+            // Select elements and set properties
+            const aElement = locationsHiddenDiv.querySelector(`a.${element}`);
+            const pElement = locationsHiddenDiv.querySelector(`p.${element}`);
+            const iframeElement = locationsHiddenDiv.querySelector(`iframe.${element}`);
+
+            if (aElement) aElement.href = docData.redirect;
+            if (pElement) pElement.textContent = docData.entryCode;
+            if (iframeElement) iframeElement.src = docData.mapSrc;
+          }
+        }
       } else {
         messageEl.textContent = 'Codul \'' + passcodeInput.value + '\' este invalid. Încearcă din nou.';
       }
@@ -79,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error(e);
   }
 });
+
 
   
 
