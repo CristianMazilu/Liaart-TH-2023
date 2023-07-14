@@ -30,8 +30,57 @@ document.addEventListener('DOMContentLoaded', function() {
     messageEl.textContent = 'Eroare de inițializare a bazei de date. Contactează organizatorii.';
   }
 });
-  
 
+
+// Form logic for the locations page, showing the locations of all the checkpoints
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // Initialize Firebase
+    let app = firebase.app();
+    const db = firebase.firestore();
+
+    // Form submission logic
+    const passcodeForm = document.querySelector('#locationsForm');
+    const passcodeInput = document.querySelector('#locationsInput');
+    const messageEl = document.querySelector('#message');
+
+    // Select the locationsHidden div
+    const locationsHiddenDiv = document.querySelector('#locationsHidden');
+
+    passcodeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const passcode = passcodeInput.value;
+      const querySnapshot = await db.collection('checkpoints').where('passCode', '==', passcode).get();
+
+      if (!querySnapshot.empty && passcode === 'liaartTH') {
+        // Access the first document that matches the query
+        const doc = querySnapshot.docs[0];
+        const docData = doc.data();
+
+        // Show the locationsHidden div
+        locationsHiddenDiv.style.display = 'block';
+
+        // Select elements and set properties
+        const elements = ['braille', 'celestial', 'documents', 'language', 'laws', 'musicality', 'navigation', 'sudoku'];
+        elements.forEach(element => {
+          const aElement = locationsHiddenDiv.querySelector(`a.${element}`);
+          const pElement = locationsHiddenDiv.querySelector(`p.${element}`);
+          const iframeElement = locationsHiddenDiv.querySelector(`iframe.${element}`);
+
+          if (aElement) aElement.href = docData.redirect;
+          if (pElement) pElement.textContent = docData.entryCode;
+          if (iframeElement) iframeElement.src = docData.mapSrc;
+        });
+      } else {
+        messageEl.textContent = 'Codul \'' + passcodeInput.value + '\' este invalid. Încearcă din nou.';
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+  
 
 // Form logic for the EXACT solution of the riddle on each checkpoint.
 document.addEventListener('DOMContentLoaded', function() {
