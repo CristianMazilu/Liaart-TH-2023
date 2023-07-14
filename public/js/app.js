@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         for (const element of elements) {
           // Query Firestore for each element type
-          const querySnapshot = await db.collection('checkpoints').where('class', '==', element).get();
+          const querySnapshot = await db.collection('checkpoints').where('passCode', '==', element).get();
 
           // Check if the query returned a result
           if (!querySnapshot.empty) {
