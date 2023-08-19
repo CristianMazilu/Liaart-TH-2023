@@ -71,10 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Select elements and set properties
             const aElement = locationsHiddenDiv.querySelector(`a.${element}`);
             const pElement = locationsHiddenDiv.querySelector(`p.${element}`);
+            const h4Element = locationsHiddenDiv.querySelector(`h4.${element}`);
             const iframeElement = locationsHiddenDiv.querySelector(`iframe.${element}`);
 
             if (aElement) aElement.href = docData.redirect;
             if (pElement) pElement.textContent = docData.entryCode;
+            if (h4Element) h4Element.textContent = docData.solution;
             if (iframeElement) iframeElement.src = docData.mapSrc;
           }
         }
